@@ -1,6 +1,8 @@
 # distill-ui
 
-A Claude Code skill that reverse-engineers any codebase's design system into a complete, interactive, agent-consumable package.
+Reverse-engineers any codebase's design system into a complete, interactive, agent-consumable package.
+
+Works with **Claude Code**, **Cursor**, **Windsurf**, **Gemini CLI**, **Codex CLI**, **VS Code Copilot**, **Kiro**, **OpenCode** — any AI coding tool that can read markdown instructions.
 
 Point it at a repo. Get back tokens, components, layouts, and a production showcase that looks and feels like the real product.
 
@@ -23,17 +25,38 @@ distill-ui reads every view, component, token, layout, and interaction pattern i
 
 ## Install
 
-Add to your Claude Code skills directory:
+### Claude Code (auto-triggers)
 
 ```bash
-# Clone into your skills folder
-git clone git@github.com:hazlijohar95/distill-ui.git ~/.claude/skills/distill-ui
+git clone https://github.com/hazlijohar95/distill-ui.git ~/.claude/skills/distill-ui
 ```
 
-The skill auto-triggers when you say things like:
+### Cursor / Windsurf
+
+Add to your project's `.cursorrules` or `.windsurfrules`:
+
+```bash
+git clone https://github.com/hazlijohar95/distill-ui.git .cursor/skills/distill-ui
+```
+
+Then reference it: "Follow the methodology in `.cursor/skills/distill-ui/SKILL.md` to extract this codebase's design system."
+
+### Codex CLI / Gemini CLI / Any AI tool
+
+Copy `SKILL.md` into your system prompt or project instructions:
+
+```bash
+git clone https://github.com/hazlijohar95/distill-ui.git /tmp/distill-ui
+# Then paste SKILL.md content as system instructions, or reference it in your prompt
+```
+
+Or just tell your tool: "Read `/tmp/distill-ui/SKILL.md` and follow its methodology to extract the design system from this codebase."
+
+### Trigger phrases (any tool)
+
 - "extract the design system from this repo"
 - "distill the UI from this codebase"
-- "I want to reverse-engineer how this product looks"
+- "reverse-engineer how this product looks"
 - "make this design agent-ready"
 
 ## Usage
@@ -116,27 +139,29 @@ The skill prioritizes the production showcase above all other outputs — it's t
 ## Architecture
 
 ```
-SKILL.md (470 lines)          ← Core methodology, always loaded
+SKILL.md (~500 lines)           ← Core methodology, always loaded
 reference/
-├── platform-detection.md     ← Loaded during Phase 0
-├── design-quality.md         ← Loaded during Phase 15-16
-└── showcase-architecture.md  ← Loaded during Phase 16
+├── platform-detection.md       ← Phase 0: detect platform, adapt strategy
+├── quality-methodology.md      ← Phase 2-3, 8, 13: extraction quality techniques
+├── design-quality.md           ← Phase 15-16: presentation craft standards
+└── showcase-architecture.md    ← Phase 16: interactive prototype patterns
 ```
 
-Progressive disclosure: SKILL.md stays lean, reference files load on demand per phase. This keeps context efficient while providing deep guidance where it matters.
+Progressive disclosure: SKILL.md stays lean, reference files load on demand per phase. This keeps context efficient while providing deep guidance where it matters. Works the same regardless of which AI tool reads it — the methodology is in the markdown, not in proprietary hooks.
 
 ## Works with impeccable
 
 distill-ui extracts. [impeccable](https://github.com/pbakaus/impeccable) refines.
 
-After extraction, use impeccable commands on the output:
+After extraction, use impeccable on the output (works in any AI tool that has impeccable installed):
+
 ```
-/impeccable critique production-showcase.html  # UX design review
-/impeccable polish production-showcase.html    # Final quality pass
-/impeccable audit production-showcase.html     # A11y + performance
+critique production-showcase.html   # UX design review
+polish production-showcase.html     # Final quality pass
+audit production-showcase.html      # A11y + performance
 ```
 
-This creates a pipeline: **extract → present → refine** — where the design system is captured faithfully, then pushed to a higher craft bar.
+Pipeline: **extract → present → refine** — the design system is captured faithfully, then pushed to a higher craft bar. Both tools are AI-harness-agnostic.
 
 ## Design principles
 

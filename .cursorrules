@@ -1,0 +1,1 @@
+When asked to extract a design system, distill UI, or reverse-engineer how a product looks, follow the methodology in `SKILL.md` at the root of this repository. Load reference files from `reference/` as directed per phase.
