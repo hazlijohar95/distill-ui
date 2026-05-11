@@ -8,6 +8,9 @@ Thumbs.db
 *.swp
 *.swo
 
+# Node
+node_modules/
+
 # Output from extractions (these are generated per-project, not part of the skill)
 design-extraction/
 design-system/

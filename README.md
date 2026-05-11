@@ -25,32 +25,26 @@ distill-ui reads every view, component, token, layout, and interaction pattern i
 
 ## Install
 
-### Claude Code (auto-triggers)
+### One command (any AI tool)
 
 ```bash
+npx distill-ui install
+```
+
+Auto-detects which AI tools you have (Claude Code, Cursor, Windsurf, Gemini, Kiro, OpenCode, etc.) and installs the skill into each.
+
+### Manual (git clone)
+
+```bash
+# Claude Code
 git clone https://github.com/hazlijohar95/distill-ui.git ~/.claude/skills/distill-ui
-```
 
-### Cursor / Windsurf
-
-Add to your project's `.cursorrules` or `.windsurfrules`:
-
-```bash
+# Cursor
 git clone https://github.com/hazlijohar95/distill-ui.git .cursor/skills/distill-ui
-```
 
-Then reference it: "Follow the methodology in `.cursor/skills/distill-ui/SKILL.md` to extract this codebase's design system."
-
-### Codex CLI / Gemini CLI / Any AI tool
-
-Copy `SKILL.md` into your system prompt or project instructions:
-
-```bash
+# Any tool — just point it at SKILL.md
 git clone https://github.com/hazlijohar95/distill-ui.git /tmp/distill-ui
-# Then paste SKILL.md content as system instructions, or reference it in your prompt
 ```
-
-Or just tell your tool: "Read `/tmp/distill-ui/SKILL.md` and follow its methodology to extract the design system from this codebase."
 
 ### Trigger phrases (any tool)
 
@@ -58,6 +52,35 @@ Or just tell your tool: "Read `/tmp/distill-ui/SKILL.md` and follow its methodol
 - "distill the UI from this codebase"
 - "reverse-engineer how this product looks"
 - "make this design agent-ready"
+
+## CLI
+
+```bash
+npx distill-ui install          # Install skill into your AI tools
+npx distill-ui update           # Update to latest version
+npx distill-ui check            # Check for updates
+npx distill-ui detect [path]    # Scan HTML/CSS for AI slop patterns
+npx distill-ui detect --json .  # JSON output (for CI)
+```
+
+### Anti-slop scanner
+
+Run `npx distill-ui detect` on your output to catch AI generation tells before delivering:
+
+```bash
+$ npx distill-ui detect design-system/presentation/
+
+  distill-ui detect — AI slop scanner
+  Scanned 2 file(s)
+
+  production-showcase.html
+    ⚠  Nested cards — Cards inside cards
+    ⚠  Flat type hierarchy — Font sizes too close together (< 1.25 ratio)
+
+  2 issue(s) found. Fix before delivering.
+```
+
+Detects 13 patterns: side-stripe borders, gradient text, nested cards, bounce easing, pure black/white, glassmorphism, icon-tile stacks, identical card grids, hero metrics, monotonous spacing, everything-centered, overused fonts, flat type hierarchy.
 
 ## Usage
 

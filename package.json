@@ -1,0 +1,40 @@
+{
+  "name": "distill-ui",
+  "version": "1.0.0",
+  "description": "Reverse-engineer any codebase's design system into agent-consumable output. Works with Claude Code, Cursor, Windsurf, Gemini CLI, Codex CLI, and any AI coding tool.",
+  "keywords": [
+    "design-system",
+    "ui-extraction",
+    "design-tokens",
+    "ai-agents",
+    "reverse-engineering",
+    "component-registry",
+    "skills",
+    "claude-code",
+    "cursor",
+    "codex"
+  ],
+  "author": "Hazli Johar",
+  "license": "MIT",
+  "homepage": "https://github.com/hazlijohar95/distill-ui",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hazlijohar95/distill-ui.git"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "type": "module",
+  "bin": {
+    "distill-ui": "cli/bin/cli.js"
+  },
+  "files": [
+    "cli/",
+    "skill/",
+    "LICENSE"
+  ],
+  "scripts": {
+    "test": "node --test tests/",
+    "build:bundle": "node scripts/build-bundle.js"
+  }
+}
