@@ -9,6 +9,16 @@ You are performing deep extraction of a codebase's entire UI system — tokens, 
 
 Your output enables another AI agent to build new screens indistinguishable from the original. The production showcase must feel like the actual product — not documentation about it.
 
+## Reference Files
+
+Load these on demand during relevant phases:
+
+| Reference | When to load | Path |
+|-----------|-------------|------|
+| Platform Detection | Phase 0 (orientation) | [reference/platform-detection.md](reference/platform-detection.md) |
+| Design Quality | Phase 15-16 (presentations) | [reference/design-quality.md](reference/design-quality.md) |
+| Showcase Architecture | Phase 16 (production showcase) | [reference/showcase-architecture.md](reference/showcase-architecture.md) |
+
 ---
 
 ## Execution Strategy
@@ -98,7 +108,7 @@ project-root/
 
 ## Phase 0: Project Orientation
 
-Identify the UI paradigm. This determines everything else.
+Identify the UI paradigm. This determines everything else. Load [reference/platform-detection.md](reference/platform-detection.md) for detection signals and grep patterns.
 
 Detect platform category:
 - **Web:** React/Vue/Svelte/Angular + Tailwind/CSS modules/styled-components
@@ -106,8 +116,13 @@ Detect platform category:
 - **Mobile:** SwiftUI, Jetpack Compose, Flutter, React Native
 - **Terminal UI:** ratatui, blessed, ink, crossterm
 
+Determine the **register** (this affects presentation style):
+- **Brand** — marketing site, landing page, editorial content. Design IS the product.
+- **Product** — app UI, dashboard, tool. Design SERVES the product.
+
 Document in `00-project-orientation.md`:
 - UI platform, framework, rendering approach
+- Register (brand or product)
 - Styling system and how visual properties are expressed
 - View/screen/route structure (list ALL routes)
 - Component locations (list directories)
@@ -278,6 +293,8 @@ Create `/design-system/registry.json` mapping every token, component, layout, bl
 
 Create `/design-system/presentation/index.html` — an interactive design system showcase.
 
+Load [reference/design-quality.md](reference/design-quality.md) before building. Apply the AI slop test and production bar.
+
 Requirements:
 - Self-contained single HTML file, no external dependencies except Google Fonts
 - CSS custom properties from extracted tokens
@@ -290,6 +307,7 @@ Requirements:
 - Toast notifications triggered by interactions
 - Keyboard navigation (J/K sections, Escape close)
 - Must look like the product's own design tool, not generic documentation
+- Must pass the AI slop test (see reference/design-quality.md)
 
 ---
 
@@ -298,6 +316,9 @@ Requirements:
 > **This is the single most important file you produce.**
 > The user evaluates the entire extraction by opening this file.
 > If it feels shallow or documentation-like, the extraction has failed.
+
+Load [reference/showcase-architecture.md](reference/showcase-architecture.md) for the proven implementation pattern.
+Load [reference/design-quality.md](reference/design-quality.md) for craft standards.
 
 Create `/design-system/presentation/production-showcase.html` — a fully interactive prototype that feels like the actual product.
 
@@ -423,6 +444,20 @@ Create `/design-system/web/`:
 - Available components list
 - Token usage guide
 - Top 5 anti-patterns
+
+---
+
+## Post-Extraction: Design Quality Loop
+
+After extraction is complete, the output can be refined using design-focused tools. If `impeccable` is available in the environment, recommend:
+
+1. **`/impeccable critique`** on the production-showcase.html — get a UX design review
+2. **`/impeccable polish`** on the showcase — final quality pass on spacing, alignment, consistency
+3. **`/impeccable audit`** — accessibility and performance check on the HTML output
+
+This turns distill-ui from extraction-only into an extraction → refinement pipeline. The extraction captures what exists; impeccable pushes it to a higher craft bar.
+
+If impeccable is not available, self-audit against [reference/design-quality.md](reference/design-quality.md) before delivering.
 
 ---
 

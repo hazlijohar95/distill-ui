@@ -108,9 +108,35 @@ The highest-value output. A single HTML file that recreates the product as an in
 2. **Extract** — Writes lean audit documents (tables over prose, evidence over opinion).
 3. **Distill** — Produces canonical tokens, component registry, layout library.
 4. **Present** — Builds interactive prototypes using the extracted system.
-5. **Translate** — Optionally outputs web-ready Tailwind + React.
+5. **Refine** — Optionally runs design quality checks via impeccable integration.
+6. **Translate** — Optionally outputs web-ready Tailwind + React.
 
 The skill prioritizes the production showcase above all other outputs — it's the proof that the extraction actually works.
+
+## Architecture
+
+```
+SKILL.md (470 lines)          ← Core methodology, always loaded
+reference/
+├── platform-detection.md     ← Loaded during Phase 0
+├── design-quality.md         ← Loaded during Phase 15-16
+└── showcase-architecture.md  ← Loaded during Phase 16
+```
+
+Progressive disclosure: SKILL.md stays lean, reference files load on demand per phase. This keeps context efficient while providing deep guidance where it matters.
+
+## Works with impeccable
+
+distill-ui extracts. [impeccable](https://github.com/pbakaus/impeccable) refines.
+
+After extraction, use impeccable commands on the output:
+```
+/impeccable critique production-showcase.html  # UX design review
+/impeccable polish production-showcase.html    # Final quality pass
+/impeccable audit production-showcase.html     # A11y + performance
+```
+
+This creates a pipeline: **extract → present → refine** — where the design system is captured faithfully, then pushed to a higher craft bar.
 
 ## Design principles
 
@@ -119,6 +145,7 @@ The skill prioritizes the production showcase above all other outputs — it's t
 - **Interactive over static** — Presentations must feel alive, not like documentation
 - **Agent-native** — Output is structured for AI consumption, not just human reading
 - **Framework-agnostic** — Works on Rust, Swift, Flutter, React, Vue, terminal UIs
+- **Anti-slop** — Presentations must pass the "would someone know AI made this?" test
 
 ## License
 
