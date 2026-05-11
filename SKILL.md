@@ -16,6 +16,7 @@ Load these on demand during relevant phases:
 | Reference | When to load | Path |
 |-----------|-------------|------|
 | Platform Detection | Phase 0 (orientation) | [reference/platform-detection.md](reference/platform-detection.md) |
+| Quality Methodology | Phase 2-3, 8-9, 13 (extraction + system output) | [reference/quality-methodology.md](reference/quality-methodology.md) |
 | Design Quality | Phase 15-16 (presentations) | [reference/design-quality.md](reference/design-quality.md) |
 | Showcase Architecture | Phase 16 (production showcase) | [reference/showcase-architecture.md](reference/showcase-architecture.md) |
 
@@ -148,7 +149,7 @@ Mark inspection status honestly. Do not proceed to final output unless all high-
 
 ## Phase 2: Token Extraction
 
-Extract every visual primitive from the codebase. Search across ALL source files, not just theme files.
+Extract every visual primitive from the codebase. Search across ALL source files, not just theme files. Load [reference/quality-methodology.md](reference/quality-methodology.md) for extraction-as-relationships techniques.
 
 **Extract:** Colors, typography (family/weight/size/line-height/letter-spacing), spacing, border-radius, shadows/elevation, borders, opacity, z-index, motion (duration/easing/spring configs), breakpoints, focus indicators, loading tokens.
 
@@ -160,21 +161,29 @@ Rules:
 - Preserve semantic names where they exist
 - Document inconsistencies between token definitions and actual usage
 - Every canonical token must trace to actual code
+- Extract the SYSTEM behind the values, not just the values themselves:
+  - Typography: identify the modular scale ratio (e.g., 1.25 Major Third)
+  - Colors: note tinted neutrals, accent scarcity (% of surface), chroma at extremes
+  - Spacing: categorize by semantic role (tight/default/loose/section/dramatic)
+  - Motion: note constraints (what's banned) alongside what's used
 
 ---
 
 ## Phase 3: Component Extraction
 
-Inspect every reusable component AND every repeated inline pattern.
+Inspect every reusable component AND every repeated inline pattern. Apply state completeness audit from [reference/quality-methodology.md](reference/quality-methodology.md).
 
 For each, document in `03-component-audit.md`:
 - Name, file path, category, purpose
-- Props/API, variants, states
+- Props/API, variants, states (audit all 8: default/hover/focus/active/disabled/loading/error/success)
+- State completeness score (e.g., "6/8 states defined")
 - Tokens used, child components, parent components
 - Styling strategy
 - Real usage examples (where it appears)
 
 Also inspect: inline/local components, anonymous render blocks, repeated patterns across views, duplicated structures. If a pattern appears >1 time, it deserves extraction.
+
+Flag components with fewer than 5/8 states — consuming agents need to know what's specified vs what they'd need to invent.
 
 ---
 
@@ -229,12 +238,17 @@ This is the primary reference for the production showcase — be exhaustive here
 
 ## Phase 8: Design DNA
 
-Distill the implicit design language in `08-design-dna.md`:
+Distill the implicit design language in `08-design-dna.md`. Load [reference/quality-methodology.md](reference/quality-methodology.md) — apply the reflex test and named rules pattern.
+
+Document:
 - Product feel (emotional/visual tone)
 - Color philosophy, typography philosophy, spacing philosophy
 - Shape language, density rules, motion philosophy
 - What makes this UI instantly recognizable (5-10 traits)
-- Anti-patterns (decisions that would break the feel)
+- Anti-patterns with intent classification (intentional brand choice vs accidental debt)
+- Named rules (e.g., "The One Voice Rule", "The Flat-by-Default Rule") with enforcement criteria
+
+**The Reflex Test:** If someone could guess your Design DNA from the product category alone, you haven't gone deep enough. What's surprising or non-obvious about this system?
 
 ---
 
@@ -272,14 +286,19 @@ Create `/design-system/blocks/README.md` with full copy-pasteable block implemen
 
 ## Phase 13: Agent System Instructions
 
-Create `/design-system/SYSTEM.md` — what another AI agent reads before building anything:
-- Design philosophy (3-7 evidence-backed rules)
-- Token hierarchy (when to use each layer)
-- Component selection guide
-- Composition rules
-- Interaction rules (states, transitions)
-- Anti-patterns
-- Done checklist
+Create `/design-system/SYSTEM.md` — what another AI agent reads before building anything. Load [reference/quality-methodology.md](reference/quality-methodology.md) for named rules format.
+
+Structure SYSTEM.md with:
+- **Named design rules** (5-7, each with: name, one-sentence rule, enforcement test, source evidence)
+- Token hierarchy (when to use primitive vs semantic vs component layer)
+- Component selection guide (which component for which purpose)
+- Composition rules (cognitive load limits, density parameters, layout selection)
+- Interaction rules (which states are mandatory, transition constraints)
+- Anti-patterns (what to never do, with WHY for each)
+- Register declaration (brand or product — determines the quality bar)
+- Done checklist (self-audit before delivering)
+
+The rules must be testable. "Use the brand color" is vague. "Magenta occupies less than 10% of any viewport — if emphasis is needed, use size or weight" is testable.
 
 ---
 
